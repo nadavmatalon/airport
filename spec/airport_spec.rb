@@ -11,6 +11,10 @@ describe Airport do
 
 	let(:airport) {Airport.new}
 
+	let(:open_airport) {Airport.new(status: :open)}
+
+	let(:closed_airport) {Airport.new(status: :closed)}
+
 	let(:landed_plane) {Plane.new}
 
 	let(:flying_plane) {Plane.new(true)}
@@ -112,7 +116,7 @@ describe Airport do
 		end
 
 
-		it "can only land a plane if that plane is currently flying" do
+		it "can only land a flying plane" do
 
 			airport.land(landed_plane)
 			airport.land(flying_plane)
@@ -191,7 +195,57 @@ describe Airport do
  	end
 
 
- 	context 'weather conditions' do
+ 	context "status & weather conditions" do
+
+ 		it "knows if it\'s open" do
+
+ 			expect(airport.open?).to eq true
+
+ 		end
+
+
+ 		it "can change it's status from 'open' to 'closed'" do
+
+ 			airport.close
+ 			expect(airport.status).to eq :closed
+
+ 		end
+
+
+ 		it "knows if it\'s closed" do
+
+ 			airport.close
+ 			expect(airport.open?).to eq false
+
+ 		end
+
+
+ 		it "can change it's status from 'closed' to 'open'" do
+
+ 			airport.open
+ 			expect(airport.status).to eq :open
+
+ 		end
+
+
+ 		it "cannot be openned if already open" do
+
+ 			expect(open_airport.open).to eq nil
+
+ 		end
+
+
+ 		it "cannot be closed if already closed" do
+ 			airport.close
+ 			puts ("the status is: #{closed_airport.status}")
+ 			expect(airport.close).to eq nil
+
+
+ 		end
+
+
+ 		
+
 
  		it 'a plane cannot take off when there is a storm brewing' do
 
