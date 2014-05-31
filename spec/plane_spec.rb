@@ -10,12 +10,12 @@ describe Plane do
  
 	let(:plane) {Plane.new}
   
-	let(:landed_plane) {Plane.new(false)}
+	let(:landed_plane) {Plane.new(:landed)}
 
-	let(:flying_plane) {Plane.new(true)}
+	let(:flying_plane) {Plane.new(:flying)}
 
 
-  		it "has a 'landed' (=not-flying) status when created" do
+  		it "has a 'landed' status when created" do
 
 			expect(plane.flying?).to be_false
 
@@ -28,7 +28,7 @@ describe Plane do
 
 		end	
 
-		it "can take-off only if it currently has a 'landed' flying status" do
+		it "can take-off only if it currently has a 'landed' status" do
 
 			expect(flying_plane.take_off).to be_false
 
@@ -49,7 +49,7 @@ describe Plane do
   		end
   
 
-  		it "changes it\'s status to 'landed' (=not-flying) after landing" do
+  		it "changes it\'s status to 'landed' after landing" do
 
   			plane.take_off
   			plane.land
@@ -75,17 +75,24 @@ describe Plane do
 
   		it "can be initialized with 'flying' status" do
 
-  			test_plane = Plane.new(true)
+  			test_plane = Plane.new(:flying)
   			expect(test_plane.flying?).to be_true
 
   		end
 
-  		it "can be initialized with 'landed' (=not-flying) status" do
+  		it "can be initialized with 'landed' status" do
 
-  			test_plane = Plane.new(false)
+  			test_plane = Plane.new(:landed)
   			expect(test_plane.flying?).to be_false
 
   		end
+
+
+		it "can only be initialized as either 'landed' or 'flying'" do
+  			test_plane = Plane.new("a")
+  			expect(test_plane.status).to eq :landed
+  		end
+
 end
 
 

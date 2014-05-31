@@ -55,7 +55,7 @@ class Airport
 
 		status == :open
 
-	end 
+	end
 
 	
 	def set_capacity_to(value = DEFAULT_CAPACITY)    

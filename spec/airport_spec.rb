@@ -17,11 +17,11 @@ describe Airport do
 
 	let(:landed_plane) {Plane.new}
 
-	let(:flying_plane) {Plane.new(true)}
+	let(:flying_plane) {Plane.new(:flying)}
 
 	def fill_airport
 
-		airport.capacity.times {airport.land(Plane.new(true))}
+		airport.capacity.times {airport.land(Plane.new(:flying))}
 
 	end
 
@@ -86,8 +86,8 @@ describe Airport do
 
 		it "can display a printable log of the planes that are currently landed in it" do
 			
-			plane_a = (Plane.new(true))
-			plane_b = (Plane.new(true))
+			plane_a = (Plane.new(:flying))
+			plane_b = (Plane.new(:flying))
 			airport.land(plane_a)
 			airport.land(plane_b)
 			expect(airport.landed_planes_log).to eq "#{plane_a}, #{plane_b}"
@@ -122,8 +122,8 @@ describe Airport do
 
 		it "can land more than one plane" do
 
-			airport.land(Plane.new(true))
-			airport.land(Plane.new(true))
+			airport.land(Plane.new(:flying))
+			airport.land(Plane.new(:flying))
 			expect(airport.landed_planes_count).to eq 2
 
 		end
