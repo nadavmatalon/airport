@@ -12,16 +12,16 @@ describe Weather do
 	let(:weather_con) {Weather.new}
 
 
-	it "initially has 'sunny' weather" do
+	it "initially has \'sunny\' weather" do
 
-		expect(weather_con.check_weather).to eq :sunny
+		expect(weather_con.weather).to eq :sunny
 
 	end
 
-	it "can be changed to 'stormy' weather" do
+	it "can be changed to \'stormy\' weather" do
 
 		weather_con.set_weather_to(:stormy)
-		expect(weather_con.check_weather).to eq :stormy
+		expect(weather_con.weather).to eq :stormy
 
 	end
 	
@@ -43,7 +43,7 @@ describe Weather do
 
 	end
 
-	it "cannot be change to 'sunny' if already 'sunny'" do
+	it "cannot be change to \'sunny\' if already 'sunny'" do
 
 		message = "weather is already sunny"
 		weather_con.set_weather_to(:sunny)
@@ -52,7 +52,7 @@ describe Weather do
 	end
 
 
-	it "cannot be change to 'stormy' if already 'stormy'" do
+	it "cannot be change to \'stormy\' if already 'stormy'" do
 
 		message = "weather is already stormy"
 		weather_con.set_weather_to(:stormy)
@@ -61,28 +61,28 @@ describe Weather do
 	end
 
 
-	it "doesn\'t throw an error if 'weather_set_to' is used without an argument" do
+	it "doesn\'t throw an error if \'weather_set_to\' method is used without an argument" do
 
 		expect(weather_con.set_weather_to).not_to raise_error
 
 	end	
 
 
-	it "gives relevant message if 'weather_set_to' is used without an argument" do
+	it "gives relevant message if \'weather_set_to\' method is used without an argument" do
 
 		message = "incorrect/missing argument (:sunny/:stormy)"
 		expect(weather_con.set_weather_to).to eq message
 
 	end	
 
-	it "doesn\'t throw an error if 'check_weather' is used with an argument" do
+	it "doesn\'t throw an error if \'check weather\' method is used with an argument" do
 
 		expect(weather_con.check_weather(1)).not_to raise_error
 
 	end
 
 
-	it "gives relevant message if 'check-weather' is used with an argument" do
+	it "gives relevant message if \'check-weather\' method is used with an argument" do
 
 		message = "method cannot be used with an argument"
 		expect(weather_con.check_weather(1)).to eq message

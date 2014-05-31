@@ -2,7 +2,6 @@ module WeatherConditions
 
 	DEFAULT_WEATHER = :sunny
 
-
 	def weather
 
 		@weather ||= DEFAULT_WEATHER
@@ -30,8 +29,12 @@ module WeatherConditions
 
 	def check_weather(param = nil)
 
-		param == nil ? weather : "method cannot be used with an argument"
-	
+		if (param == nil)
+			@weather = get_random_weather
+		else 
+			"method cannot be used with an argument"
+		end
+
 	end
 
 
@@ -45,6 +48,13 @@ module WeatherConditions
 	def weather_stormy?
 
 		weather == :stormy
+
+	end
+
+	def get_random_weather
+
+		possible_weather = [:sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :stormy]
+		current_weather = possible_weather[Random.new.rand(0..9)]
 
 	end
 
