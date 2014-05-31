@@ -17,10 +17,9 @@ class Airport
 
 		@capacity = set_capacity_to(params.fetch(:capacity, DEFAULT_CAPACITY))
 
-		@status = set_status_to(params.fetch(:status, DEFAULT_STATUS))
-
 		@weather = self.check_weather
-		# @weather = set_weather_to(params.fetch(:weather, WeatherConditions::DEFAULT_WEATHER))
+
+		@status = update_status(weather)
 
 		@landed_planes = landed_planes
 	end
@@ -76,17 +75,29 @@ class Airport
 	end
 
 
-	def set_status_to(value = DEFAULT_STATUS)
+	# def set_status_to(value = DEFAULT_STATUS)
 
-		if (value == :open || value == :closed)
 
-			@status = value
 
-		else
+	# 	if (value == :open || value == :closed)
 
-			@status = DEFAULT_STATUS
 
-		end
+	# 		@status = value
+
+	# 	else
+
+	# 		@status = DEFAULT_STATUS
+
+	# 	end
+
+	# end
+
+
+	def update_status (value = check_weather)
+
+		(value == :sunny) ? @status = :open : @status = :closed
+
+		@status
 
 	end
 
@@ -113,6 +124,8 @@ class Airport
 
 	def land (plane = nil)
 
+		update_status (check_weather)
+
 		if 	((open?) && (!full?) && 
 			(plane.is_a?Plane) && 
 			(plane.flying?) &&
@@ -132,6 +145,8 @@ class Airport
 
 
 	def send_off (plane = nil)
+
+		update_status (check_weather)
 
 		if (open? && landed_planes.include?(plane))
 
