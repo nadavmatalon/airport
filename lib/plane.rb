@@ -19,16 +19,21 @@ class Plane
 
 
 	def take_off
-
-		@flying = true if !@flying 
-		
+		if !@flying 
+			@flying = true 
+		else 
+			false
+		end
 	end
 
 
 	def land
-
-		@flying = false if @flying
-
+		if @flying
+			@flying = false
+			true
+		else
+			false
+		end
 	end
 
 end

@@ -10,6 +10,11 @@ describe Plane do
  
 	let(:plane) {Plane.new}
   
+	let(:landed_plane) {Plane.new(false)}
+
+	let(:flying_plane) {Plane.new(true)}
+
+
   		it "has a 'landed' (=not-flying) status when created" do
 
 			expect(plane.flying?).to be_false
@@ -17,18 +22,22 @@ describe Plane do
   		end
   
   
-		it "can take-off only if it currently has a 'landed' status" do
+		it "can take-off" do
 
-			
 			expect(plane.take_off).to be_true
 
 		end	
 
+		it "can take-off only if it currently has a 'landed' flying status" do
+
+			expect(flying_plane.take_off).to be_false
+
+		end	
 
 		it "that's already flying can\'t take-off again" do
 
 			plane.take_off
-			expect(plane.take_off).to eq nil
+			expect(plane.take_off).to be_false
 
 		end
 
@@ -40,7 +49,7 @@ describe Plane do
   		end
   
 
-  		it "has a 'landed' (=not-flying) status after landing" do
+  		it "changes it\'s status to 'landed' (=not-flying) after landing" do
 
   			plane.take_off
   			plane.land
@@ -51,9 +60,8 @@ describe Plane do
 
   		it "can only be landed once between take-offs" do
 
-  			plane.take_off
-  			plane.land
-  			expect(plane.land).to eq nil
+  			flying_plane.land
+  			expect(flying_plane.land).to be_false
 
   		end
 
@@ -65,6 +73,19 @@ describe Plane do
 
   		end
 
+  		it "can be initialized with 'flying' status" do
+
+  			test_plane = Plane.new(true)
+  			expect(test_plane.flying?).to be_true
+
+  		end
+
+  		it "can be initialized with 'landed' (=not-flying) status" do
+
+  			test_plane = Plane.new(false)
+  			expect(test_plane.flying?).to be_false
+
+  		end
 end
 
 
