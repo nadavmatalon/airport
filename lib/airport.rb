@@ -11,7 +11,7 @@ class Airport
 
 	def initialize(params={}, landed_planes=[])
 
-		@capacity = params.fetch(:capacity, DEFAULT_CAPACITY)
+		@capacity = set_capacity_to(params.fetch(:capacity, DEFAULT_CAPACITY))
 
 		@status = params.fetch(:status, DEFAULT_STATUS)
 
@@ -19,10 +19,11 @@ class Airport
 	end
 
 
-	def capacity    
+	def capacity
 
-		@capacity ||= DEFAULT_CAPACITY
-	
+		@capacity ||= DEFAULT_CAPACITY 
+
+
 	end
 
 
@@ -56,7 +57,15 @@ class Airport
 	
 	def set_capacity_to(value = DEFAULT_CAPACITY)    
 
-		@capacity = value
+		if (value >= 0 && value.integer?rescue false)
+
+			@capacity = value 
+
+		else
+
+			@capacity = DEFAULT_CAPACITY
+
+		end
 
 	end
 

@@ -57,7 +57,7 @@ describe Airport do
 		end
 
 
-		it "doesn\'t throw an error if the 'set_capacity_to' method is used with no argument" do
+		it "doesn\'t throw an error if the 'set_capacity_to' method is used without an argument" do
 			expect(airport.set_capacity_to).not_to raise_error
 
 		end
@@ -244,7 +244,33 @@ describe Airport do
  		end
 
 
- 		
+ 		it "can only be initialized as either ':open' or ':closed'" do
+
+ 			# expect(Airport.new(status: 40)).to 
+
+ 		end
+
+
+ 		it "initializes with default capacity unless an integer is given" do
+
+			airport_test = Airport.new(capacity: "a")
+
+ 			expect(airport_test.capacity).to eq Airport::DEFAULT_CAPACITY
+
+ 		end
+
+
+		it "initializes with default capacity unless a positive integer is given" do
+
+			airport_test = Airport.new(capacity: -40)
+
+ 			expect(airport_test.capacity).to eq Airport::DEFAULT_CAPACITY
+
+ 		end
+
+
+
+
 
 
  		it 'a plane cannot take off when there is a storm brewing' do
