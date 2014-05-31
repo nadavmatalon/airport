@@ -23,7 +23,12 @@ describe Airport do
 
 	def fill_airport
 
-		airport.capacity.times {airport.land(Plane.new(:flying))}
+		airport.capacity.times {
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
+			airport.land(Plane.new(:flying))
+
+		}
 
 	end
 
@@ -46,25 +51,13 @@ describe Airport do
 		it "does not land more planes if it is full" do
 
 			fill_airport
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
 			airport.land(flying_plane)
 			expect(airport.landed_planes_count).to eq airport.capacity
 
 		end
 
-		it "can be initialized with ':open' status" do
-
-			test_airport = Airport.new(status: :open)
-			expect(test_airport.status).to eq :open
-
-		end
-
-
-		it "can be initialized with ':closed' status" do
-
-			test_airport = Airport.new(status: :closed)
-			expect(test_airport.status).to eq :closed
-
-		end
 
 		it "can be initialized with a given capacity" do
 
@@ -82,12 +75,15 @@ describe Airport do
 
 
 		it "doesn\'t throw an error if the 'set_capacity_to' method is used without an argument" do
+
 			expect(airport.set_capacity_to).not_to raise_error
 
 		end
 
 		it "can display a printable log of the planes that are currently landed in it" do
-			
+
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
 			plane_a = (Plane.new(:flying))
 			plane_b = (Plane.new(:flying))
 			airport.land(plane_a)
@@ -117,6 +113,8 @@ describe Airport do
 
 		it "can land a plane" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
+
 			airport.land(flying_plane)
 			expect(airport.landed_planes_count).to eq 1
 		end
@@ -124,8 +122,8 @@ describe Airport do
 
 		it "can land more than one plane" do
 
-			airport.land(Plane.new(:flying))
-			airport.land(Plane.new(:flying))
+			allow(airport).to receive(:check_weather) {:sunny}
+			2.times{airport.land(Plane.new(:flying))}
 			expect(airport.landed_planes_count).to eq 2
 
 		end
@@ -133,15 +131,16 @@ describe Airport do
 
 		it "can land the same plane only once between take-offs" do
 
-			airport.land(flying_plane)
-			airport.land(flying_plane)
+			allow(airport).to receive(:check_weather) {:sunny}
+			2.times {airport.land(flying_plane)}
 			expect(airport.landed_planes).to eq [flying_plane]
 
 		end
 
 		it "cannot land a plane if the airport is closed" do
 
-			closed_airport.land(flying_plane)
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.land(flying_plane)
 			expect(closed_airport.landed_planes).to eq []
 
 		end
@@ -149,6 +148,7 @@ describe Airport do
 
 		it "can only land a flying plane" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			airport.land(landed_plane)
 			airport.land(flying_plane)
 			expect(airport.landed_planes).to eq [flying_plane]
@@ -157,6 +157,7 @@ describe Airport do
 
 		it "updates a plane's flying status to 'landed' after landing it" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			airport.land(flying_plane)
 			expect(flying_plane.flying?).to be_false
 
@@ -172,6 +173,7 @@ describe Airport do
 
 		it "can send off a plane" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
 			expect(airport.landed_planes).to eq []
@@ -180,6 +182,7 @@ describe Airport do
 
 		it "cannot send off a plane if not currently landed in it" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			expect(airport.send_off(flying_plane)).to eq false
 
 		end
@@ -187,8 +190,11 @@ describe Airport do
 
 		it "cannot send off a plane if the airport is closed" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
 			airport.land(flying_plane)
-			airport.close
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.update_status
 			airport.send_off(flying_plane)
 			expect(airport.landed_planes).to eq [flying_plane]
 
@@ -197,6 +203,7 @@ describe Airport do
 
 		it "cannot send off the same plane more than once between landings" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
 			expect(airport.send_off(flying_plane)).to eq false
@@ -206,6 +213,7 @@ describe Airport do
 
 		it "updates a plane's flying status to 'flying' after sending it off" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
 			expect(flying_plane.flying?).to be_true
@@ -240,6 +248,8 @@ describe Airport do
 
  		it "knows if it\'s open" do
 
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
  			expect(airport.open?).to eq true
 
  		end
@@ -247,7 +257,9 @@ describe Airport do
 
  		it "can change it's status from 'open' to 'closed'" do
 
- 			airport.close
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
+			airport.close
  			expect(airport.status).to eq :closed
 
  		end
@@ -255,15 +267,18 @@ describe Airport do
 
  		it "knows if it\'s closed" do
 
- 			airport.close
- 			expect(airport.open?).to eq false
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.update_status
+ 			expect(airport.status).to eq :closed
 
  		end
 
 
  		it "can change it's status from 'closed' to 'open'" do
 
- 			airport.open
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.update_status
+			airport.open
  			expect(airport.status).to eq :open
 
  		end
@@ -271,30 +286,26 @@ describe Airport do
 
  		it "cannot be openned if already open" do
 
- 			expect(open_airport.open).to eq nil
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
+ 			expect(airport.open).to eq nil
 
  		end
 
 
  		it "cannot be closed if already closed" do
- 			airport.close
+
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.update_status
  			expect(airport.close).to eq nil
 
-
  		end
 
 
- 		it "can only be initialized as either ':open' or ':closed'" do
-
- 			# expect(Airport.new(status: 40)).to 
-
- 		end
-
-
+ 
  		it "initializes with default capacity unless an integer is given" do
 
 			airport_test = Airport.new(capacity: "a")
-
  			expect(airport_test.capacity).to eq Airport::DEFAULT_CAPACITY
 
  		end
@@ -309,17 +320,20 @@ describe Airport do
  		end
 
 
-		it "initializes with default status unless legitimate status is provided" do
+ 		it "can check if the weather is sunny" do
 
-			airport_test = Airport.new(status: 40)
-
- 			expect(airport_test.status).to eq Airport::DEFAULT_STATUS
+			allow(airport).to receive(:check_weather) {:sunny}
+			airport.update_status
+ 			expect(airport.check_weather).to eq :sunny
 
  		end
 
- 		it "can check the weather" do
 
- 			# expect(airport.check_weather).to
+		it "can check if the weather is stormy" do
+
+			allow(airport).to receive(:check_weather) {:stormy}
+			airport.update_status
+ 			expect(airport.check_weather).to eq :stormy
 
  		end
 

@@ -4,8 +4,8 @@ require_relative "airport.rb"
 # update return values of land and take_off methods to symbols
 # add brand, model, etc.
 # add factory class to build airports and planes
-# planes can currently take off while landed in airport
-
+# planes can currently take off independently while landed in airport
+# airport can be opened or closed regardless of the weather
 
 class Plane
 
