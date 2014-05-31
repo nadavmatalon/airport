@@ -14,14 +14,14 @@ describe Weather do
 
 	it "initially has 'sunny' weather" do
 
-		expect(weather_con.weather_status).to eq :sunny
+		expect(weather_con.check_weather).to eq :sunny
 
 	end
 
 	it "can be changed to 'stormy' weather" do
 
 		weather_con.set_weather_to(:stormy)
-		expect(weather_con.weather_status).to eq :stormy
+		expect(weather_con.check_weather).to eq :stormy
 
 	end
 	
@@ -63,18 +63,29 @@ describe Weather do
 
 	it "doesn\'t throw an error if 'weather_set_to' is used without an argument" do
 
-		message = "incorrect/missing argument (:sunny/:stormy)"
-		expect(weather_con.set_weather_to).to eq message
 		expect(weather_con.set_weather_to).not_to raise_error
 
 	end	
 
 
-	it "doesn\'t throw an error if 'weather_status' is used with an argument" do
+	it "gives relevant message if 'weather_set_to' is used without an argument" do
+
+		message = "incorrect/missing argument (:sunny/:stormy)"
+		expect(weather_con.set_weather_to).to eq message
+
+	end	
+
+	it "doesn\'t throw an error if 'check_weather' is used with an argument" do
+
+		expect(weather_con.check_weather(1)).not_to raise_error
+
+	end
+
+
+	it "gives relevant message if 'check-weather' is used with an argument" do
 
 		message = "method cannot be used with an argument"
-		expect(weather_con.weather_status(1)).to eq message
-		expect(weather_con.weather_status(1)).not_to raise_error
+		expect(weather_con.check_weather(1)).to eq message
 
 	end
 

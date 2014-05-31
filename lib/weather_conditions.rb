@@ -28,7 +28,7 @@ module WeatherConditions
 	end
 
 
-	def weather_status(param = nil)
+	def check_weather(param = nil)
 
 		param == nil ? weather : "method cannot be used with an argument"
 	

@@ -10,6 +10,7 @@ class Airport
 
 	DEFAULT_STATUS = :open
 
+
 	include WeatherConditions
 
 	def initialize(params={}, landed_planes=[])
@@ -18,6 +19,9 @@ class Airport
 
 		@status = set_status_to(params.fetch(:status, DEFAULT_STATUS))
 
+		@weather = self.check_weather
+		# @weather = set_weather_to(params.fetch(:weather, WeatherConditions::DEFAULT_WEATHER))
+
 		@landed_planes = landed_planes
 	end
 
@@ -25,7 +29,6 @@ class Airport
 	def capacity
 
 		@capacity ||= DEFAULT_CAPACITY 
-
 
 	end
 
@@ -46,7 +49,7 @@ class Airport
 
 	def open
 
-		@status = :open if status == :closed
+		@status = :open unless status == :open
 
 	end
 
