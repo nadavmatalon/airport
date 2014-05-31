@@ -59,6 +59,12 @@ class Airport
 
 	end
 
+	def closed?
+
+		status == :closed
+
+	end
+
 	
 	def set_capacity_to(value = DEFAULT_CAPACITY)    
 
@@ -124,7 +130,7 @@ class Airport
 
 	def land (plane = nil)
 
-		update_status (check_weather)
+		update_status unless closed?
 
 		if 	((open?) && (!full?) && 
 			(plane.is_a?Plane) && 
@@ -133,11 +139,11 @@ class Airport
 
 			landed_planes << plane
 			plane.land
-			return true
+			true
 
 		else
 
-			return false
+			false
 
 		end
 
@@ -146,7 +152,7 @@ class Airport
 
 	def send_off (plane = nil)
 
-		update_status (check_weather)
+		update_status unless closed?
 
 		if (open? && landed_planes.include?(plane))
 
