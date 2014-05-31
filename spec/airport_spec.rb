@@ -49,6 +49,28 @@ describe Airport do
 
 		end
 
+		it "can be initialized with ':open' status" do
+
+			test_airport = Airport.new(status: :open)
+			expect(test_airport.status).to eq :open
+
+		end
+
+
+		it "can be initialized with ':closed' status" do
+
+			test_airport = Airport.new(status: :closed)
+			expect(test_airport.status).to eq :closed
+
+		end
+
+		it "can be initialized with a given capacity" do
+
+			test_airport = Airport.new(capacity: 200)
+			expect(test_airport.capacity).to eq 200
+
+		end
+
 
 		it "can have it's defualt capacity changed" do
 
@@ -89,7 +111,7 @@ describe Airport do
 	end
 
 
-	context "landing and sending off planes" do
+	context "landing & sending off planes" do
 
 		it "can land a plane" do
 
@@ -115,6 +137,13 @@ describe Airport do
 
 		end
 
+		it "cannot land a plane if the airport is closed" do
+
+			closed_airport.land(flying_plane)
+			expect(closed_airport.landed_planes).to eq []
+
+		end
+
 
 		it "can only land a flying plane" do
 
@@ -132,7 +161,7 @@ describe Airport do
 		end
 
 
-		it "doesn\'t throw an error if the 'land' method is used with no argument" do
+		it "doesn\'t throw an error if the 'land' method is used without an argument" do
 
 			expect(airport.land).not_to raise_error
 
@@ -147,9 +176,19 @@ describe Airport do
 
 		end
 
-		it "can not send off a plane if that plane isn\'t currently landed in it" do
+		it "cannot send off a plane if not currently landed in it" do
 
-			expect(airport.send_off(flying_plane)).to eq nil
+			expect(airport.send_off(flying_plane)).to eq false
+
+		end
+
+
+		it "cannot send off a plane if the airport is closed" do
+
+			airport.land(flying_plane)
+			airport.close
+			airport.send_off(flying_plane)
+			expect(airport.landed_planes).to eq [flying_plane]
 
 		end
 
@@ -158,7 +197,7 @@ describe Airport do
 
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
-			expect(airport.send_off(flying_plane)).to eq nil
+			expect(airport.send_off(flying_plane)).to eq false
 
 		end
 
@@ -237,7 +276,6 @@ describe Airport do
 
  		it "cannot be closed if already closed" do
  			airport.close
- 			puts ("the status is: #{closed_airport.status}")
  			expect(airport.close).to eq nil
 
 
@@ -269,8 +307,13 @@ describe Airport do
  		end
 
 
+		it "initializes with default status unless legitimate status is provided" do
 
+			airport_test = Airport.new(status: 40)
 
+ 			expect(airport_test.status).to eq Airport::DEFAULT_STATUS
+
+ 		end
 
 
  		it 'a plane cannot take off when there is a storm brewing' do
@@ -280,7 +323,6 @@ describe Airport do
 
 
  		it 'a plane cannot land in the middle of a storm' do
-
 
 
  		end

@@ -1,6 +1,6 @@
 require_relative "airport.rb"
 
-# add comments
+# check possibility of "land_in(airport)"
 
 class Plane
 

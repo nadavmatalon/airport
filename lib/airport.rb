@@ -1,6 +1,9 @@
 require_relative "plane.rb"
 require_relative "weather_conditions.rb"
 
+# overwrite include method
+# remove parenthesis
+
 class Airport
 
 	DEFAULT_CAPACITY = 100
@@ -13,7 +16,7 @@ class Airport
 
 		@capacity = set_capacity_to(params.fetch(:capacity, DEFAULT_CAPACITY))
 
-		@status = params.fetch(:status, DEFAULT_STATUS)
+		@status = set_status_to(params.fetch(:status, DEFAULT_STATUS))
 
 		@landed_planes = landed_planes
 	end
@@ -70,6 +73,21 @@ class Airport
 	end
 
 
+	def set_status_to(value = DEFAULT_STATUS)
+
+		if (value == :open || value == :closed)
+
+			@status = value
+
+		else
+
+			@status = DEFAULT_STATUS
+
+		end
+
+	end
+
+
 	def landed_planes
 
 		@landed_planes ||= []
@@ -92,26 +110,33 @@ class Airport
 
 	def land (plane = nil)
 
-		if 	((plane.is_a?Plane) && 
+		if 	((open?) && (!full?) && 
+			(plane.is_a?Plane) && 
 			(plane.flying?) &&
-			(!full?) &&
-			(!landed_planes.include?(plane))) 
+			(!landed_planes.include?plane))
 
-				landed_planes << plane
-				plane.land
+			landed_planes << plane
+			plane.land
+			return true
 
-			end
+		else
+
+			return false
+
+		end
 
 	end
 
 
 	def send_off (plane = nil)
 
-		if landed_planes.include?(plane)
+		if (open? && landed_planes.include?(plane))
 
 			landed_planes.delete(plane)
 			plane.take_off
-
+			return true
+		else
+			return false
 		end
 	end
 
