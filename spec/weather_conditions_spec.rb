@@ -1,84 +1,74 @@
 require "./lib/weather_conditions.rb"
 
-class Weather; 
-
-	include WeatherConditions; 
-
-end
-
+class Weather; include WeatherConditions; end
 
 describe Weather do
 
 	let(:weather_con) {Weather.new}
 
+	def sunny_conditions
 
-	it "initially has \'sunny\' weather" do
+			allow(weather_con).to receive(:get_random_weather) {:sunny}
+	end
 
+
+	def stormy_conditions
+
+			allow(weather_con).to receive(:get_random_weather) {:stormy}
+	end
+
+
+	it "can display the weather if weather is sunny" do
+
+		sunny_conditions
 		expect(weather_con.weather).to eq :sunny
-
 	end
 
-	it "can be changed to \'stormy\' weather" do
 
-		weather_con.set_weather_to(:stormy)
+	it "can display the weather if weather is stormy" do
+
+		stormy_conditions
 		expect(weather_con.weather).to eq :stormy
-
 	end
-	
+
 
 	it "knows if it\'s sunny" do
 
-		weather_con.set_weather_to(:sunny)
+		sunny_conditions
 		expect(weather_con.weather_sunny?).to be_true
-		expect(weather_con.weather_stormy?).to be_false
 
 	end
 
 
 	it "knows if it\'s stormy" do
 
-		weather_con.set_weather_to(:stormy)
+		stormy_conditions
 		expect(weather_con.weather_stormy?).to be_true
-		expect(weather_con.weather_sunny?).to be_false
-
-	end
-
-	it "cannot be change to \'sunny\' if already 'sunny'" do
-
-		message = "weather is already sunny"
-		weather_con.set_weather_to(:sunny)
-		expect(weather_con.set_weather_to(:sunny)).to eq message
 
 	end
 
 
-	it "cannot be change to \'stormy\' if already 'stormy'" do
+	it "can change from \'sunny\' to \'stormy\'" do
 
-		message = "weather is already stormy"
-		weather_con.set_weather_to(:stormy)
-		expect(weather_con.set_weather_to(:stormy)).to eq message
-
+		sunny_conditions
+		expect(weather_con.check_weather).to eq :sunny
+		stormy_conditions
+		expect(weather_con.check_weather).to eq :stormy
 	end
 
+	
+	it "can change from \'stormy\' to \'sunny\'" do
 
-	it "doesn\'t throw an error if \'weather_set_to\' method is used without an argument" do
+		stormy_conditions
+		expect(weather_con.check_weather).to eq :stormy
+		sunny_conditions
+		expect(weather_con.check_weather).to eq :sunny
+	end
 
-		expect(weather_con.set_weather_to).not_to raise_error
-
-	end	
-
-
-	it "gives relevant message if \'weather_set_to\' method is used without an argument" do
-
-		message = "incorrect/missing argument (:sunny/:stormy)"
-		expect(weather_con.set_weather_to).to eq message
-
-	end	
 
 	it "doesn\'t throw an error if \'check weather\' method is used with an argument" do
 
 		expect(weather_con.check_weather(1)).not_to raise_error
-
 	end
 
 
@@ -86,7 +76,6 @@ describe Weather do
 
 		message = "method cannot be used with an argument"
 		expect(weather_con.check_weather(1)).to eq message
-
 	end
 
 end
