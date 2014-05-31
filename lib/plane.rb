@@ -1,6 +1,9 @@
 require_relative "airport.rb"
 
 # check possibility of "land_in(airport)"
+# change flying status to symbols
+# add status method (and tests when no argument provided)
+# update return values of land and take_off methods to symbols
 
 class Plane
 
