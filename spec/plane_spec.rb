@@ -87,6 +87,13 @@ describe Plane do
 
   		end
 
+  		it "knows if it\'s landed" do
+
+  			expect(landed_plane.landed?).to be_true
+  			expect(flying_plane.landed?).to be_false
+
+  		end
+
 
 		it "can only be initialized as either 'landed' or 'flying'" do
   			test_plane = Plane.new("a")

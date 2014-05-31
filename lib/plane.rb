@@ -1,11 +1,10 @@
 require_relative "airport.rb"
 
 # check possibility of "land_in(airport)"
-# change flying status to symbols
-# add status method (and tests when no argument provided)
 # update return values of land and take_off methods to symbols
 # add brand, model, etc.
-# planes can currently take off when landed in airport
+# add factory class to build airports and planes
+# planes can currently take off while landed in airport
 
 
 class Plane
@@ -40,6 +39,13 @@ class Plane
 	end
 
 
+	def landed?
+
+		@status == :landed
+
+	end
+
+
 	def take_off
 		if @status == :landed 
 			@status = :flying 
@@ -58,5 +64,8 @@ class Plane
 			false
 		end
 	end
+
+
+
 
 end

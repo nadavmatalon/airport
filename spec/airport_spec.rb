@@ -19,6 +19,8 @@ describe Airport do
 
 	let(:flying_plane) {Plane.new(:flying)}
 
+
+
 	def fill_airport
 
 		airport.capacity.times {airport.land(Plane.new(:flying))}
@@ -312,6 +314,12 @@ describe Airport do
 			airport_test = Airport.new(status: 40)
 
  			expect(airport_test.status).to eq Airport::DEFAULT_STATUS
+
+ 		end
+
+ 		it "can check the weather" do
+
+ 			# expect(airport.check_weather).to
 
  		end
 
