@@ -13,11 +13,8 @@ class Airport
 	def initialize(params={}, landed_planes=[])
 
 		@capacity = set_capacity_to(params.fetch(:capacity, DEFAULT_CAPACITY))
-
 		@weather = check_weather
-
 		@status = update_status(weather?)
-
 		@landed_planes = landed_planes
 	end
 
@@ -43,7 +40,6 @@ class Airport
 	def open
 
 		status == :closed ? @status = :open : "airport is already open"
-
 	end
 
 
@@ -67,11 +63,13 @@ class Airport
 	
 	def set_capacity_to(value = DEFAULT_CAPACITY)    
 
-		if (value >= 0 && value.integer?rescue false)
-			@capacity = value 
-		else
-			@capacity = DEFAULT_CAPACITY
-		end
+		positive_integer?(value) ? @capacity = value : @capacity = DEFAULT_CAPACITY
+	end
+
+
+	def positive_integer?(value)
+
+		value >= 0 && value.integer?rescue false
 	end
 
 
@@ -102,11 +100,7 @@ class Airport
 
 	def land (plane = nil)
 
-		update_status
-		if ((open?) && (!full?) && 
-		   (plane.is_a?Plane) && 
-		   (plane.flying?) &&
-		   (!landed_planes.include?plane))
+		if (landing_conditions_met?(plane))
 			landed_planes << plane
 			update_landing_history(plane)
 			plane.land
@@ -116,6 +110,14 @@ class Airport
 		else
 			"plane could not be landed"
 		end
+	end
+
+
+	def landing_conditions_met?(plane)
+
+		update_status
+		((open?) && (!full?) && (plane.is_a?Plane) && 
+		(plane.flying?) && (!landed_planes.include?plane))
 	end
 
 
@@ -157,7 +159,6 @@ class Airport
 	def takeoff_history
 
 		@takeoff_history ||= []
-		return @takeoff_history
 	end
 
 

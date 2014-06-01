@@ -1,6 +1,5 @@
 require_relative "airport.rb"
 
-# check possibility of "land_in(airport)"
 # known issue: planes can currently take off independently while landed in airport
 # refactor weather generator to work with default
 

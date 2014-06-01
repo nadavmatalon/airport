@@ -94,7 +94,6 @@ describe Airport do
 			airport = Airport.new(capacity: -40)
  			expect(airport.capacity).to eq Airport::DEFAULT_CAPACITY
  		end
-
 	end
 
 

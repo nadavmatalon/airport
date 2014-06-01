@@ -90,10 +90,10 @@ describe Plane do
     end
 
 
-		it "can only be initialized as either \'landed\' or 'flying'" do
+	it "can only be initialized as either \'landed\' or 'flying'" do
  
-  			expect(Plane.new(1).status).to eq Plane::DEFAULT_STATUS
-  		end
+  		expect(Plane.new(1).status).to eq Plane::DEFAULT_STATUS
+  	end
 end
 
 
