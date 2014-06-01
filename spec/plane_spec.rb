@@ -1,11 +1,5 @@
 require "plane"
 
-
-# When we create a new plane, it should have a "flying" status, thus planes can not be created in the airport.
-#
-# When we land a plane at the airport, the plane in question should have its status changed to "landed"
-#
-# When the plane takes of from the airport, the plane's status should become "flying"
 describe Plane do
  
 	let(:plane) {Plane.new}
@@ -14,8 +8,7 @@ describe Plane do
 
 	let(:flying_plane) {Plane.new(:flying)}
 
-
-  		it "has a 'landed' status when created" do
+  it "has a \'landed\' status when created" do
 
 			expect(plane.flying?).to be_false
 
@@ -25,20 +18,17 @@ describe Plane do
 		it "can take-off" do
 
 			expect(plane.take_off).to be_true
-
 		end	
 
 		it "can take-off only if it currently has a 'landed' status" do
 
 			expect(flying_plane.take_off).to be_false
-
 		end	
 
 		it "that's already flying can\'t take-off again" do
 
 			plane.take_off
 			expect(plane.take_off).to be_false
-
 		end
 
 
@@ -54,7 +44,6 @@ describe Plane do
   			plane.take_off
   			plane.land
   			expect(plane.flying?).to be_false
-
   		end
   
 
@@ -62,7 +51,6 @@ describe Plane do
 
   			flying_plane.land
   			expect(flying_plane.land).to be_false
-
   		end
 
 		it "changes its status to 'flying' after taking off" do
@@ -70,36 +58,37 @@ describe Plane do
 			expect(plane.flying?).to be_false
 			plane.take_off
 			expect(plane.flying?).to be_true	
-
   		end
 
   		it "can be initialized with 'flying' status" do
 
   			test_plane = Plane.new(:flying)
   			expect(test_plane.flying?).to be_true
-
   		end
 
   		it "can be initialized with 'landed' status" do
 
   			test_plane = Plane.new(:landed)
   			expect(test_plane.flying?).to be_false
-
   		end
 
   		it "knows if it\'s landed" do
 
   			expect(landed_plane.landed?).to be_true
   			expect(flying_plane.landed?).to be_false
-
   		end
 
 
-		it "can only be initialized as either 'landed' or 'flying'" do
-  			test_plane = Plane.new("a")
-  			expect(test_plane.status).to eq :landed
-  		end
+        it "doesn't throw an error if initialized with wrong argument" do
 
+            expect(Plane.new(1)).not_to raise_error
+        end
+
+
+		it "can only be initialized as either \'landed\' or 'flying'" do
+ 
+  			expect(Plane.new(1).status).to eq Plane::DEFAULT_STATUS
+  		end
 end
 
 

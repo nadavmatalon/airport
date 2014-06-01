@@ -10,8 +10,7 @@ class Plane
 
 	def initialize (status_init = DEFAULT_STATUS)
 
-		if (status_init == :landed || status_init == :flying)
-
+		if (status_init == :landed || status_init == :flying) 
 			@status = status_init
 		else
 			@status = DEFAULT_STATUS
