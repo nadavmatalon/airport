@@ -25,7 +25,7 @@ module WeatherConditions
 
 		possible_weather = []
 		(DEFAULT_SUNNY_PROBABILITY*100).to_i.times{possible_weather << :sunny}
-		((1-DEFAULT_SUNNY_PROBABILITY)*100).to_i.times{possible_weather << :stormy}
+		((1.0-DEFAULT_SUNNY_PROBABILITY)*100).to_i.times{possible_weather << :stormy}
 		current_weather = possible_weather[Random.new.rand(0..99)]
 	end
 end
