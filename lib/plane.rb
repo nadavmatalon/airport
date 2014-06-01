@@ -5,7 +5,7 @@ require_relative "airport.rb"
 # add brand, model, etc.
 # add factory class to build airports and planes
 # planes can currently take off independently while landed in airport
-# airport can be opened or closed regardless of the weather
+# refactor weather generator to work with default
 
 class Plane
 

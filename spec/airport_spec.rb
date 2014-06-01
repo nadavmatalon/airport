@@ -65,22 +65,20 @@ describe Airport do
 
 			airport = Airport.new(capacity: 200)
 			expect(airport.capacity).to eq 200
-
 		end
 
 
 		it "can have it's defualt capacity changed" do
 
 			expect(airport.set_capacity_to(40)).to eq airport.capacity
-
 		end
 
 
 		it "doesn\'t throw an error if the 'set_capacity_to' method is used without an argument" do
 
 			expect(airport.set_capacity_to).not_to raise_error
-
 		end
+
 
 		it "can display a printable log of the planes that are currently landed in it" do
 
@@ -93,22 +91,44 @@ describe Airport do
 		end
 
 
-		xit "landed planes log returns appropriate message if airport is empty" do
+		it "landed planes log returns appropriate message if airport is empty" do
 
-			expect(airport.landed_planes_log).to eq "No planes are currently landed at the airport"
-
+			message = "No planes are currently landed at the airport"
+			expect(airport.landed_planes_log).to eq message
 		end
 
 
-		xit "can display a log of all the planes which landed in it at least once" do
+		it "knows how many planes are currently landed in it" do
 
+			sunny_conditions
+			20.times{airport.land(Plane.new(:flying))}
+			expect(airport.landed_planes_count).to eq 20
 		end
 
 
-		xit "can display a log of all the planes which were sent off from it at least once" do
+		it "can display a log of all the planes which landed in it at least once" do
 
+			sunny_conditions
+			plane_a = (Plane.new(:flying))
+			plane_b = (Plane.new(:flying))
+			airport.land(plane_a)
+			airport.land(plane_b)
+			airport.send_off(plane_a)
+			expect(airport.landing_history).to eq [plane_a, plane_b]
 		end
 
+
+		it "can display a log of all the planes which took off from it at least once" do
+
+			sunny_conditions
+			plane_a = (Plane.new(:flying))
+			plane_b = (Plane.new(:flying))
+			airport.land(plane_a)
+			airport.land(plane_b)
+			airport.send_off(plane_a)
+			airport.send_off(plane_b)
+			expect(airport.takeoff_history).to eq [plane_a, plane_b]
+		end
 	end
 
 
@@ -127,7 +147,6 @@ describe Airport do
 			sunny_conditions
 			2.times{airport.land(Plane.new(:flying))}
 			expect(airport.landed_planes_count).to eq 2
-
 		end
 
 
@@ -136,27 +155,15 @@ describe Airport do
 			sunny_conditions
 			2.times {airport.land(flying_plane)}
 			expect(airport.landed_planes).to eq [flying_plane]
-
 		end
 
-		it "cannot land a plane if the airport is closed" do
-
-			sunny_conditions
-			airport.close
-			airport.land(flying_plane)
-			expect(airport.landed_planes).to eq []
-			expect(flying_plane.status).to eq :flying
-
-		end
 
  		it "cannot land a plane if the weather is stormy" do
 
 			stormy_conditions
 			airport.land(flying_plane)
 			expect(airport.landed_planes).to eq []
-
  		end
-
 
 
 		it "can only land flying planes" do
@@ -165,7 +172,6 @@ describe Airport do
 			airport.land(landed_plane)
 			airport.land(flying_plane)
 			expect(airport.landed_planes).to eq [flying_plane]
-
 		end
 
 
@@ -174,14 +180,26 @@ describe Airport do
 			sunny_conditions
 			airport.land(flying_plane)
 			expect(flying_plane.flying?).to be_false
+		end
 
+		it "returns the plane's status after succesfully landing it" do
+
+			sunny_conditions
+			expect(airport.land(flying_plane)).to eq :landed
+		end
+
+
+		it "returns a message if cannot perform plane landing" do
+
+			stormy_conditions
+			message = "plane could not be landed"
+			expect(airport.land(flying_plane)).to eq message
 		end
 
 
 		it "doesn\'t throw an error if the \'land\' method is used without an argument" do
 
 			expect(airport.land).not_to raise_error
-
 		end
 
 
@@ -191,27 +209,14 @@ describe Airport do
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
 			expect(airport.landed_planes).to eq []
-
 		end
 
 
-		it "cannot send off a plane if not currently landed in it" do
+		it "cannot send off a plane if it\'s not currently landed in it" do
 
 			sunny_conditions
-			expect(airport.send_off(flying_plane)).to eq false
-
-		end
-
-
-		it "cannot send off a plane if the airport is closed" do
-
-			sunny_conditions
-			airport.land(flying_plane)
-			airport.close
- 			airport.send_off(flying_plane)
-			expect(airport.landed_planes).to eq [flying_plane]
-			expect(flying_plane.status).to eq :landed
-
+			message = "plane could not take off"
+			expect(airport.send_off(flying_plane)).to eq message
 		end
 
 
@@ -222,17 +227,32 @@ describe Airport do
 			stormy_conditions
 			airport.send_off(flying_plane)
 			expect(airport.landed_planes).to eq [flying_plane]
-
  		end
 
 
 		it "cannot send off the same plane more than once between landings" do
 
 			sunny_conditions
+			message = "plane could not take off"
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
-			expect(airport.send_off(flying_plane)).to eq false
+			expect(airport.send_off(flying_plane)).to eq message
+		end
 
+
+		it "returns the plane's status after succesful take off" do
+
+			sunny_conditions
+			airport.land(flying_plane)
+			expect(airport.send_off(flying_plane)).to eq :flying
+		end
+
+
+		it "returns a message if cannot send off a plane" do
+
+			stormy_conditions
+			message = "plane could not take off"
+			expect(airport.send_off(flying_plane)).to eq message
 		end
 
 
@@ -242,7 +262,6 @@ describe Airport do
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
 			expect(flying_plane.flying?).to be_true
-
 		end
 
 
@@ -252,20 +271,10 @@ describe Airport do
 			expect(airport.send_off).not_to raise_error
 
 		end
-
 	end
 
 
 	context 'traffic control' do
-
-    # Include a weather condition using a module.
-    # The weather must be random and only have two states "sunny" or "stormy".
-    # Try and take off a plane, but if the weather is stormy, the plane can not take off and must remain in the airport.
-    # 
-    # This will require stubbing to stop the random return of the weather.
-    # If the airport has a weather condition of stormy,
-    # the plane can not land, and must not be in the airport
- 
 
  	end
 
@@ -276,7 +285,6 @@ describe Airport do
 
 			sunny_conditions
  			expect(airport.open?).to eq true
-
  		end
 
 		it "can change it's status from \'open\' to \'closed\' due to weather conditions" do
@@ -284,7 +292,6 @@ describe Airport do
 			sunny_conditions
 			stormy_conditions
  			expect(airport.status).to eq :closed
-
  		end
 
 
@@ -293,7 +300,6 @@ describe Airport do
 			sunny_conditions
 			airport.close
  			expect(airport.status).to eq :closed
-
  		end
 
 
@@ -301,7 +307,6 @@ describe Airport do
 
 			stormy_conditions
  			expect(airport.status).to eq :closed
-
  		end
 
 
@@ -310,7 +315,6 @@ describe Airport do
  			stormy_conditions	
  			sunny_conditions	
  			expect(airport.status).to eq :open
-
  		end
 
 
@@ -319,7 +323,6 @@ describe Airport do
  			stormy_conditions	
 			airport.open
  			expect(airport.status).to eq :open
-
  		end
 
 
@@ -327,7 +330,6 @@ describe Airport do
 
  			sunny_conditions	
  			expect(airport.open).to eq nil
-
  		end
 
 
@@ -335,7 +337,6 @@ describe Airport do
 
  			stormy_conditions	
  			expect(airport.close).to eq nil
-
  		end
 
 
@@ -344,7 +345,6 @@ describe Airport do
 
 			airport = Airport.new(capacity: "a")
  			expect(airport.capacity).to eq Airport::DEFAULT_CAPACITY
-
  		end
 
 
@@ -352,7 +352,6 @@ describe Airport do
 
 			airport = Airport.new(capacity: -40)
  			expect(airport.capacity).to eq Airport::DEFAULT_CAPACITY
-
  		end
 
 
@@ -360,7 +359,6 @@ describe Airport do
 
  			sunny_conditions	
  			expect(airport.check_weather).to eq :sunny
-
  		end
 
 
@@ -368,12 +366,8 @@ describe Airport do
 
  			stormy_conditions	
  			expect(airport.check_weather).to eq :stormy
-
  		end
-
  	end
-
  end
  
 
- 

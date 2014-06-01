@@ -1,12 +1,6 @@
 module WeatherConditions
 
 
-	def weather
-
-		@weather ||= get_random_weather
-	end
-
-
 	def check_weather(param = nil)
 
 		param.nil? ? @weather = get_random_weather : \

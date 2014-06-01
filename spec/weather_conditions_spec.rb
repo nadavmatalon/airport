@@ -21,14 +21,14 @@ describe Weather do
 	it "can display the weather if weather is sunny" do
 
 		sunny_conditions
-		expect(weather_con.weather).to eq :sunny
+		expect(weather_con.check_weather).to eq :sunny
 	end
 
 
 	it "can display the weather if weather is stormy" do
 
 		stormy_conditions
-		expect(weather_con.weather).to eq :stormy
+		expect(weather_con.check_weather).to eq :stormy
 	end
 
 
