@@ -1,10 +1,7 @@
 require_relative "airport.rb"
 
 # check possibility of "land_in(airport)"
-# update return values of land and take_off methods to symbols
-# add brand, model, etc.
-# add factory class to build airports and planes
-# planes can currently take off independently while landed in airport
+# known issue: planes can currently take off independently while landed in airport
 # refactor weather generator to work with default
 
 class Plane
@@ -16,33 +13,27 @@ class Plane
 		if (status_init == :landed || status_init == :flying)
 
 			@status = status_init
-
 		else
-
 			@status = DEFAULT_STATUS
-
 		end
-
 	end
 
 
 	def status
 
 		@status
-
 	end
+
 
 	def flying?
 
 		@status == :flying
-
 	end
 
 
 	def landed?
 
 		@status == :landed
-
 	end
 
 
@@ -64,8 +55,7 @@ class Plane
 			false
 		end
 	end
-
-
-
-
 end
+
+
+

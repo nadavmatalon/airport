@@ -36,7 +36,6 @@ describe Weather do
 
 		sunny_conditions
 		expect(weather_con.weather_sunny?).to be_true
-
 	end
 
 
@@ -44,7 +43,6 @@ describe Weather do
 
 		stormy_conditions
 		expect(weather_con.weather_stormy?).to be_true
-
 	end
 
 
@@ -77,7 +75,6 @@ describe Weather do
 		message = "method cannot be used with an argument"
 		expect(weather_con.check_weather(1)).to eq message
 	end
-
 end
 
 
