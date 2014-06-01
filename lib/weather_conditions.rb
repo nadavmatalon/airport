@@ -1,5 +1,6 @@
 module WeatherConditions
 
+	DEFAULT_SUNNY_PROBABILITY = 0.90
 
 	def check_weather(param = nil)
 
@@ -22,8 +23,10 @@ module WeatherConditions
 
 	def get_random_weather
 
-		possible_weather = [:sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :sunny, :stormy]
-		current_weather = possible_weather[Random.new.rand(0..9)]
+		possible_weather = []
+		(DEFAULT_SUNNY_PROBABILITY*100).to_i.times{possible_weather << :sunny}
+		((1-DEFAULT_SUNNY_PROBABILITY)*100).to_i.times{possible_weather << :stormy}
+		current_weather = possible_weather[Random.new.rand(0..99)]
 	end
 end
 
