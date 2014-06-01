@@ -14,18 +14,19 @@ require "plane"
 describe "The Grand Finale" do
 
 	let(:airport) {Airport.new(capacity: 6)}
-	let(:plane_1) {Plane.new(:flying)}
-	let(:plane_2) {Plane.new(:flying)}
-	let(:plane_3) {Plane.new(:flying)}
-	let(:plane_4) {Plane.new(:flying)}
-	let(:plane_5) {Plane.new(:flying)}
-	let(:plane_6) {Plane.new(:flying)}
+	let(:plane_1) {Plane.new}
+	let(:plane_2) {Plane.new}
+	let(:plane_3) {Plane.new}
+	let(:plane_4) {Plane.new}
+	let(:plane_5) {Plane.new}
+	let(:plane_6) {Plane.new}
 
 	def sunny_conditions
 
 			allow(airport).to receive(:check_weather) {:sunny}
 			airport.update_status
 	end
+
 
 	it "successfully lands all planes" do
 

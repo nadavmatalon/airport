@@ -5,9 +5,9 @@ describe Airport do
 
 	let(:airport) {Airport.new}
 
-	let(:landed_plane) {Plane.new}
+	let(:flying_plane) {Plane.new}
 
-	let(:flying_plane) {Plane.new(:flying)}
+	let(:landed_plane) {Plane.new(:landed)}
 
 	def sunny_conditions
 
@@ -45,7 +45,7 @@ describe Airport do
 		end
 
 
-		it "does not land more planes if it is full" do
+		it "does not land more planes if it\'s full" do
 
 			fill_airport
 			airport.land(flying_plane)
@@ -66,7 +66,7 @@ describe Airport do
 		end
 
 
-		it "doesn\'t throw an error if the 'set_capacity_to' method is used without an argument" do
+		it "doesn\'t throw an error if the \'set_capacity_to\' method is used without an argument" do
 
 			expect(airport.set_capacity_to).not_to raise_error
 		end

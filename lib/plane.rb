@@ -6,7 +6,7 @@ require_relative "airport.rb"
 
 class Plane
 
-	DEFAULT_STATUS = :landed
+	DEFAULT_STATUS = :flying
 
 	def initialize (status_init = DEFAULT_STATUS)
 
@@ -37,22 +37,15 @@ class Plane
 
 
 	def take_off
-		if @status == :landed 
-			@status = :flying 
-			true 
-		else
-			false
-		end
+		
+		@status == :landed ? @status = :flying : "plane is already flying"
+
 	end
 
 
 	def land
-		if @status == :flying
-			@status = :landed
-			true
-		else
-			false
-		end
+
+		@status == :flying ? @status = :landed : "plane is already landed"
 	end
 end
 
