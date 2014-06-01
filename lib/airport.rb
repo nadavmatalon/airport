@@ -40,15 +40,16 @@ class Airport
 	end
 
 
-	def close
+	def open
 
-		@status = :closed unless status == :closed
+		status == :closed ? @status = :open : "airport is already open"
+
 	end
 
 
-	def open
+	def close
 
-		@status = :open unless status == :open
+		status == :open ? @status = :closed : "airport is already closed"
 	end
 
 
@@ -110,6 +111,8 @@ class Airport
 			update_landing_history(plane)
 			plane.land
 			plane.status
+		elsif (plane.nil?)
+			"method requires an argument (plane)"
 		else
 			"plane could not be landed"
 		end
@@ -124,6 +127,8 @@ class Airport
 			update_takeoff_history(plane)
 			plane.take_off
 			plane.status
+		elsif (plane.nil?)
+			"method requires an argument (plane)"
 		else
 			"plane could not take off"
 		end
