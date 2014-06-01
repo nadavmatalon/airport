@@ -1,4 +1,4 @@
-#AIRPORT PROJECT
+#AIRPORT
 
 ##1. General Overview
 The "Airport" project simulates a basic, yet fully functional, system for managing the landing and taking off of planes in and from airports under changing weather conditions.
@@ -13,7 +13,7 @@ The code was written in Ruby using the TDD method.
 
 ###2.1 Plane Class
 
-Plane can either have 'flying' or 'landed' status (the defualt is 'flying' when first created).
+Plane can have either 'flying' or 'landed' status (the defualt is 'flying' when first created).
 
 Hence, a plane that is 'landed' cannot be landed again unless it fitst takes off.
 
@@ -23,45 +23,46 @@ This status can be determined on initialization (defualt is 'flying'), as well a
 
 Note that, as in real life, a plane can land or take off outside of an airport under any weather conditions (sunny or stormy). 
 
-However, a plane cannot land by itself in an airport. Rather, the airport is the one responsible for landing plane inside it (and this operation is weather depended). 
+However, a plane cannot land by itself in an airport. Rather, the airport is the one responsible for landing planes inside it (and this operation is weather and airport status depended). 
 
-Again as in real life, the airport is usually the one which manages the taking off of planes that are landed inside it (sending off planes is also weather dependent). 
+Again as in real life, the airport is usually the one which manages the taking off of planes that are currently landed inside it (sending off planes is weather dependent). 
 
-Nevertheless, note that a plane can take off indepedently from the airport but this operation essentially constitues an unauthorized departure and therefore will not be logged in the airport records.
+Nevertheless, note that a plane can take off indepedently from the airport but this operation is construed as an "unauthorized departure" and therefore is not logged in the airport records (which may lead into problems). Therefore, it is not recomded to land or take off planes directly, but rather have the airporta to manage these operations.
 
 
 ###2.2 Airport Class
 
-Airports have a number of essential properties, namely: 
+Airports have a number of essential properties, specifically: 
 - status (open/closed)  [depends on weather conditions]
+
 - capacity (defualt: 100 planes) [can be changed on initialization or afterwards]
+
 - landed planes logging (knows which planes are currently landed inside it).
 
  An airport's status (open/closed) is dependent on the weather conditions (sunny/stormy): they are automatically opened on good (sunny) weather and closed off on bad (stormy) weather.
 
-An Airport can land a plane only if that plane is currently flying, and the airport itself is open, not full, not holding that particular plane inside it, and has good (sunny) local weather.
+An Airport can only land a plane that is currently flying, while the airport itself must be open, not full, not holding that particular plane inside it, and has good (sunny) local weather.
 
-Similarly, an airport can send off a plane only if that plane is currently landed inside it, the airport itself is open, and the local weather is not stormy.
+Similarly, an airport can onlt send off a plane if that plane is currently landed inside it, the airport itself is open, and the local weather is not stormy.
 
 As in real life, the airport can be opened or closed independently of the weather, but if it's closed it cannot land or send off planes.
 
-The airport checks these conditions automatically for every landing/sending off attempt. 
+The airport checks all the relevant conditions (including the current weather) automatically on every landing/sending off attempt, as well as on every local weather inquiry.
 
-These conditions (and consequently, the airport's status) are also updated every time a direct inquiry into the state of the weather is made (see Weather Module below for details).  
 
 ###2.3 Weather Module
 
-The Weather module is responsible for generating random weather conditions which can be either 'sunny' or 'stormy'.
+The Weather module is responsible for generating random weather conditions. 
 
-The random distribution of said weather conditions is significantly biased toward good ('sunny') weather. 
+These conditions may be either 'sunny' or 'stormy', and they are set locally and independently for each airport instance.
 
-Upon every weather conditions update, on average the weather will be 'sunny' 90% of the time, and 'stormy in the rest.'
+The random distribution of possible weather conditions is significantly biased toward good ('sunny') weather. 
 
-Note that weather conditions are set locally and independently for each airport.
+More specifically, on average the weather will be 'sunny' 90% of the time, and 'stormy' during the rest.
 
-The Weather module has been included in the Airport class and therefore any given airport instance can inquire into its local weather whenever necessary (ie for plane landing or sending off). 
+The Weather module has been included in the Airport class and therefore any given airport instance can inquire into its local weather at any point in time (ie for plane landing or sending off, or just for updated info). 
 
-An airport can also inquire into the weather conditions derectly by using the Weather module methods, but note that every inquiry may change the current local weather for that airport. 
+An airport can also inquire into the weather conditions derectly by using the Weather module methods, but note that every inquiry into the state of the weather may change the current local conditions for the airport which makes the inquiry. 
 
 
 ##3. List of Methods of Classes & Module
@@ -133,11 +134,5 @@ Airport.new([landed_plane]) - creates a new airport instance with a landed plane
 .weather_sunny?  -  returns boolean: true if 'sunny'/false if 'stormy'.
 
 .weather_stormy?  -  returns boolean: true if 'stormy' / false if 'sunny'. 
-
-
-
-
-
-
 
  
