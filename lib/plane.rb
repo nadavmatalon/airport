@@ -1,8 +1,5 @@
 require_relative "airport.rb"
 
-# known issue: planes can currently take off independently while landed in airport
-# refactor weather generator to work with default
-
 class Plane
 
 	DEFAULT_STATUS = :flying

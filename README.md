@@ -90,6 +90,8 @@ Plane.new(:flying) - creates a new plane instance with 'flying' status.
 .take_off - changes plane's status to 'flying' if currently 'landed'
 
 
+###3.2 Airport
+
 ####3.2.1 Airport Class Methods
 
 Airport.new()  - creates a new airport instance (defualt capacity: 100 planes).
@@ -97,6 +99,7 @@ Airport.new()  - creates a new airport instance (defualt capacity: 100 planes).
 Airport.new(capacity: 200) - creates a new airport instance with capacity of 200 planes.  
 
 Airport.new([landed_plane]) - creates a new airport instance with a landed plane. 
+
 
 ####3.2.2 Airport Instance Methods
 
@@ -127,6 +130,8 @@ Airport.new([landed_plane]) - creates a new airport instance with a landed plane
 .(All the Weather Module Instance Methods listed below)
 
 
+###3.3 Weather
+
 ####3.3 Weather Module Instance Methods
 
 .check_weather  -  returns random weather conditions (90% 'sunny' / 10% 'stormy') [conditions may change with every call to this method]
@@ -135,4 +140,5 @@ Airport.new([landed_plane]) - creates a new airport instance with a landed plane
 
 .weather_stormy?  -  returns boolean: true if 'stormy' / false if 'sunny'. 
 
+ (May 2014 Cohort @ Makers Academy)
  
