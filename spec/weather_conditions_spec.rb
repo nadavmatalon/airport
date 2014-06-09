@@ -8,13 +8,13 @@ describe Weather do
 
 	def sunny_conditions
 
-			allow(weather_con).to receive(:get_random_weather) {:sunny}
+		allow(weather_con).to receive(:get_random_weather) {:sunny}
 	end
 
 
 	def stormy_conditions
 
-			allow(weather_con).to receive(:get_random_weather) {:stormy}
+		allow(weather_con).to receive(:get_random_weather) {:stormy}
 	end
 
 
