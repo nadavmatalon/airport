@@ -60,7 +60,7 @@ describe Airport do
 
 		it "doesn\'t throw an error if the \'set_capacity_to\' method is used without an argument" do
 
-			expect(airport.set_capacity_to).not_to raise_error
+			expect{ airport.set_capacity_to }.not_to raise_error
 		end
 
 
@@ -153,7 +153,7 @@ describe Airport do
 
 			sunny_conditions
 			airport.land(flying_plane)
-			expect(flying_plane.flying?).to be_false
+			expect(flying_plane.flying?).to be false
 		end
 
 
@@ -174,7 +174,7 @@ describe Airport do
 
 		it "doesn\'t throw an error if the \'land\' method is used without an argument" do
 
-			expect(airport.land).not_to raise_error
+			expect{ airport.land }.not_to raise_error
 		end
 
 
@@ -243,14 +243,14 @@ describe Airport do
 			sunny_conditions
 			airport.land(flying_plane)
 			airport.send_off(flying_plane)
-			expect(flying_plane.flying?).to be_true
+			expect(flying_plane.flying?).to be true
 		end
 
 
 		it "doesn\'t throw an error if \'send_off\' method is used with no argument" do
 
 			sunny_conditions
-			expect(airport.send_off).not_to raise_error
+			expect{ airport.send_off }.not_to raise_error
 		end
 	
 

@@ -32,7 +32,7 @@ describe "The Grand Finale" do
 
 		sunny_conditions
 		expect(airport.weather?).to eq :sunny
-		expect(airport.open?).to be_true
+		expect(airport.open?).to be true
 		airport.land(plane_1)
 		airport.land(plane_2)
 		airport.land(plane_3)
@@ -41,7 +41,7 @@ describe "The Grand Finale" do
 		airport.land(plane_6)
 		planes = [plane_1, plane_2, plane_3, plane_4, plane_5, plane_6]
 		expect(airport.landed_planes.count).to eq 6
-		expect(airport.full?).to be_true
+		expect(airport.full?).to be true
 		expect(airport.landed_planes).to eq planes
 		expect(plane_1.status).to eq :landed
 		expect(plane_2.status).to eq :landed
@@ -56,7 +56,7 @@ describe "The Grand Finale" do
 
 		sunny_conditions
 		expect(airport.weather?).to eq :sunny
-		expect(airport.open?).to be_true
+		expect(airport.open?).to be true
 		airport.send_off(plane_1)
 		airport.send_off(plane_2)
 		airport.send_off(plane_3)
@@ -64,7 +64,7 @@ describe "The Grand Finale" do
 		airport.send_off(plane_5)
 		airport.send_off(plane_6)
 		expect(airport.landed_planes_count).to eq 0
-		expect(airport.full?).to be_false
+		expect(airport.full?).to be false
 		expect(airport.landed_planes).to eq []
 		expect(plane_1.status).to eq :flying
 		expect(plane_2.status).to eq :flying

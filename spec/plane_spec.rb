@@ -9,7 +9,7 @@ describe Plane do
 
     it "has a \'flying\' status when created by default" do
 
-		expect(Plane.new.flying?).to be_true
+		expect(Plane.new.flying?).to be true
   	end
   
   
@@ -53,9 +53,9 @@ describe Plane do
 
 	it "changes its status to \'flying\' after taking off" do
   
-		expect(landed_plane.flying?).to be_false
+		expect(landed_plane.flying?).to be false
 		landed_plane.take_off
-		expect(landed_plane.flying?).to be_true	
+		expect(landed_plane.flying?).to be true	
   	end
 
 
@@ -73,20 +73,20 @@ describe Plane do
 
   	it "knows if it\'s landed" do
 
-  		expect(landed_plane.landed?).to be_true
-  		expect(flying_plane.landed?).to be_false
+  		expect(landed_plane.landed?).to be true
+  		expect(flying_plane.landed?).to be false
   	end
 
 
     it "knows if it\'s flying" do
 
-        expect(landed_plane.flying?).to be_false
-        expect(flying_plane.flying?).to be_true
+        expect(landed_plane.flying?).to be false
+        expect(flying_plane.flying?).to be true
     end
 
     it "doesn't throw an error if initialized with wrong argument" do
 
-        expect(Plane.new(1)).not_to raise_error
+        expect{ Plane.new(1) }.not_to raise_error
     end
 
 

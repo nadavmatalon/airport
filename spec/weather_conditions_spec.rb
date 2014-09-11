@@ -35,14 +35,14 @@ describe Weather do
 	it "knows if it\'s sunny" do
 
 		sunny_conditions
-		expect(weather_con.weather_sunny?).to be_true
+		expect(weather_con.weather_sunny?).to be true
 	end
 
 
 	it "knows if it\'s stormy" do
 
 		stormy_conditions
-		expect(weather_con.weather_stormy?).to be_true
+		expect(weather_con.weather_stormy?).to be true
 	end
 
 
@@ -66,7 +66,7 @@ describe Weather do
 
 	it "doesn\'t throw an error if \'check weather\' method is used with an argument" do
 
-		expect(weather_con.check_weather(1)).not_to raise_error
+		expect{ weather_con.check_weather(1) }.not_to raise_error
 	end
 
 
