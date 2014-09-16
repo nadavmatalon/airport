@@ -27,8 +27,8 @@ for generating random weather. These condition, in turn, affect the operation of
 airports in terms of their ability to land/send off planes.
 
 The code was written in [Ruby](https://www.ruby-lang.org/en/) using 
-[TDD](http://en.wikipedia.org/wiki/Test-driven_development) methodology (tests written with
-[Rspec](http://rspec.info/)).
+[TDD](http://en.wikipedia.org/wiki/Test-driven_development) methodology 
+(tests written with [Rspec](http://rspec.info/)).
 
 
 ##Guidelines
@@ -224,6 +224,6 @@ Tests were written with [Rspec](http://rspec.info/) (3.0.4).
 To run the tests, clone the repo to a local folder and in terminal run: 
 
 ```bash
-$> cd takeaway
+$> cd airport
 $> rspec
 ```
