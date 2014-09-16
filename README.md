@@ -14,7 +14,7 @@
 
 ##General Description
 
-This repo contians the answer to __Week 4 Friday Challange__ as part 
+This repo contians my answer to __Week 4 Friday Challange__ as part 
 of the course at [Makers Academy](http://www.makersacademy.com/).
 
 The __Airport__ project simulates a system for managing the landing and taking off of planes 
