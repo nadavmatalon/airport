@@ -2,6 +2,8 @@
 
 ##Makers Academy | Week 4 | Challenge
 
+[![Code Climate](https://codeclimate.com/github/nadavmatalon/airport/badges/gpa.svg)](https://codeclimate.com/github/nadavmatalon/airport)
+
 ##Table of Contents
 
 * [General Description](#general-description)
