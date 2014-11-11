@@ -22,14 +22,11 @@ describe "The Grand Finale" do
 	let(:plane_6) {Plane.new}
 
 	def sunny_conditions
-
-			allow(airport).to receive(:check_weather) {:sunny}
-			airport.update_status
+		allow(airport).to receive(:check_weather) { :sunny }
+		airport.set_weather_to :sunny and airport.update_status
 	end
 
-
 	it "successfully lands all planes" do
-
 		sunny_conditions
 		expect(airport.weather?).to eq :sunny
 		expect(airport.open?).to be true
@@ -51,9 +48,7 @@ describe "The Grand Finale" do
 		expect(plane_6.status).to eq :landed
 	end
 
-
 	it "successfully sends off all planes" do
-
 		sunny_conditions
 		expect(airport.weather?).to eq :sunny
 		expect(airport.open?).to be true
@@ -74,6 +69,4 @@ describe "The Grand Finale" do
 		expect(plane_6.status).to eq :flying
 	end
 end
-
-
 
