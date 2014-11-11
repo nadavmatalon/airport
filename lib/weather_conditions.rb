@@ -2,32 +2,24 @@ module WeatherConditions
 
 	DEFAULT_SUNNY_PROBABILITY = 0.90
 
-	def check_weather(param = nil)
-
-		param.nil? ? @weather = get_random_weather : \
-		"method cannot be used with an argument"
+	def check_weather
+		@weather = get_random_weather
 	end
 
+	def set_weather_to weather_type
+		@weather = weather_type
+	end
 
 	def weather_sunny?
-
 		check_weather == :sunny
 	end
 
-
 	def weather_stormy?
-
 		check_weather == :stormy
 	end
 
-
 	def get_random_weather
-
-		possible_weather = []
-		(DEFAULT_SUNNY_PROBABILITY*100).to_i.times{possible_weather << :sunny}
-		((1.0-DEFAULT_SUNNY_PROBABILITY)*100).to_i.times{possible_weather << :stormy}
-		current_weather = possible_weather[Random.new.rand(0..99)]
+		rand(100)/100.0 < DEFAULT_SUNNY_PROBABILITY ? :sunny : :stormy
 	end
 end
-
 

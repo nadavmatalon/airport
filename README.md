@@ -2,14 +2,14 @@
 
 ##Makers Academy | Week 4 | Challenge
 
-
 ##Table of Contents
 
 * [General Description](#general-description)
 * [Guidelines](#guidelines)
-* [How to Run](#how-to-run)
+* [How to Install and Run Locally](#how-to-install-and-run-locally)
 * [Functional Description](#functional-description)
 * [Testing](#testing)
+* [License](#license)
 
 
 ##General Description
@@ -17,23 +17,21 @@
 This repo contians my answer to __Week 4 Friday Challange__ as part 
 of the course at [Makers Academy](http://www.makersacademy.com/).
 
-The __Airport__ project simulates a system for managing the landing and taking off of planes 
-in and from airports under changing weather conditions.
-
-There system includes two main classes: __Airport__ &amp; __Plane__. 
-
-The system also incorporates an independent module called: __WeatherConditions__ 
-for generating random weather. These condition, in turn, affect the operation of 
-airports in terms of their ability to land/send off planes.
-
 The code was written in [Ruby](https://www.ruby-lang.org/en/) using 
 [TDD](http://en.wikipedia.org/wiki/Test-driven_development) methodology 
 (tests written with [Rspec](http://rspec.info/)).
 
+The __Airport__ project simulates a system for managing the landing and taking off of planes 
+in and from airports under changing weather conditions.
+
+There system includes two main classes: __Airport__ &amp; __Plane__, 
+as well as an independent module __WeatherConditions__ 
+for generating random weather. These condition, in turn, affect the operation of 
+airports in terms of their ability to land/send off planes.
 
 ##Guidelines
 
-* Imagine you're writing software to control the flow of planes at an airport. 
+* Write a software to control the flow of planes at an airport. 
   The planes can land and take off provided that the weather is sunny. 
   Occasionally it may be stormy, in which case no planes can land or take off.
 
@@ -56,17 +54,17 @@ The code was written in [Ruby](https://www.ruby-lang.org/en/) using
     * The code is elegant: every class has a clear responsibility, methods are short etc.
 
 
-##How to Run
+##How to Install and Run Locally
 
 Clone the repo to a local folder and in terminal run:
 
 ```bash
 $> ch airport
 $> irb
->> require './lib/airport_setup.rb'
+>> require './lib/airport.rb'
 ```
 
-And then you can use the methods described in the functional description (next section).
+Then you can use the methods described in the functional description (next section).
 
 
 ## Functional Description
@@ -219,7 +217,7 @@ Airport.new([landed_plane]) - creates a new airport instance with a landed plane
 
 ##Testing
 
-Tests were written with [Rspec](http://rspec.info/) (3.0.4).
+Tests were written with [Rspec](http://rspec.info/) (3.1.0).
 
 To run the tests, clone the repo to a local folder and in terminal run: 
 
@@ -227,3 +225,8 @@ To run the tests, clone the repo to a local folder and in terminal run:
 $> cd airport
 $> rspec
 ```
+
+##License
+
+<p>Released under the <a href="http://www.opensource.org/licenses/MIT">MIT license</a>.</p>
+
